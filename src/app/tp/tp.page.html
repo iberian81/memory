@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>tp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+ <ion-item *ngFor="let card of cards" >
+   <ion-avatar>
+     <ion-img src="/assets/{{card}}" *ngIf="visible" (click)="guessCard(card)" ></ion-img>
+   </ion-avatar>
+ </ion-item>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block" (click)="change()">Hide</ion-button>
+  </ion-toolbar>
+</ion-footer>
