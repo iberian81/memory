@@ -14,6 +14,10 @@ export class TpPage implements OnInit {
 
   private questionMarkUrl = '/assets/images/question-mark.png';
 
+  private hasARevealedCard: boolean = false;
+
+  private previousCard;
+
   /**
    * Génération du jeu de cartes
    **/
@@ -30,33 +34,45 @@ export class TpPage implements OnInit {
   /** 
    * Mélange des cartes
    */
-  private shuffleDeck(){
+  private shuffleDeck() {
     this.cardList.forEach(
       (item, index, deck) => {
         //position aléatoire dans le tableau
-      let newPos = Math.floor(Math.random() * deck.length);
+        let newPos = Math.floor(Math.random() * deck.length);
         //permutation 
         deck[index] = deck[newPos];
         deck[newPos] = item;
-    });
+      });
   }
 
-  private flipCard(card, index){
-    //affichage de la carte
-    card.img = card.name;
-    card.revealed=true;
-    //masquage de la carte au bout de 1 seconde
-    setTimeout(
-      ()=>{
-        card.img = this.questionMarkUrl;
-        card.revealed = false;
-      },
-      1000);
+  private flipCard(card, index) {
+    //affichage de la carte si ell n'est pas déjà affichée 
+    //et si aucune autre carte n'est en cours d'affichage
+    if (!card.revealed && !this.hasARevealedCard) {
+      //affichage de la carte
+      card.img = card.name;
+      card.revealed = true;
+      this.hasARevealedCard = true;
+      if (this.previousCard && this.previousCard == card.name) {
+        this.previousCard.img = card.name;
+        this.previousCard.revealed = true;
+      } else {
+        //masquage de la carte au bout de 1 seconde
+        setTimeout(
+          () => {
+            card.img = this.questionMarkUrl;
+            card.revealed = false;
+            this.hasARevealedCard = false;
+            this.previousCard = card;
+          },
+          1000);
+      }
+    }
   }
 
 
 
-  constructor() { 
+  constructor() {
     this.generateDeck();
     console.log(this.cardList);
   }
