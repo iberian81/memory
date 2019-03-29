@@ -7,28 +7,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TpPage implements OnInit {
 
-private cards = ["images/cards/0.png", "images/cards/1.png", "images/cards/2.png",
- "images/cards/0.png", "images/cards/1.png", "images/cards/2.png"];
+  private cardList: Array<{ name: string, img: string, revealed: boolean }> =
+    [];
 
- private visible:boolean = true;
-private misteryCard:any;
+  private numberOfDistinctCards = 6;
 
- change(){
-   this.visible = ! this.visible;
- }
+  private questionMarkUrl = '/assets/images/question-mark.png';
 
- guessCard(card){
-   this.misteryCard = this.cards[1];
-   if(card==this.misteryCard){
-     console.log("gagné");
-   }else {
-     console.log("try again");
-   }
- }
+  private generateDeck() {
+    for (let i = 0; i < this.numberOfDistinctCards; i++) {
+      let imgUrl = '/assets/images/cards/' + i + ".png";
+      this.cardList.push({ img: this.questionMarkUrl, name: imgUrl, revealed: false });
+      this.cardList.push({ img: this.questionMarkUrl, name: imgUrl, revealed: false });
+    }
+  }
 
 
-
-  constructor() { }
+  constructor() { 
+    this.generateDeck();
+  }
 
   ngOnInit() {
   }

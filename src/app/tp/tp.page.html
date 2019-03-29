@@ -6,17 +6,15 @@
 
 <ion-content>
 
- <ion-item *ngFor="let card of cards" >
-   <ion-avatar>
-     <ion-img src="/assets/{{card}}" *ngIf="visible" (click)="guessCard(card)" ></ion-img>
-   </ion-avatar>
- </ion-item>
+ <ion-grid>
+   <ion-row>
+     <ion-col size="4" *ngFor="let card of cardList">
+       <ion-img src="{{card.img}}"></ion-img>
+     </ion-col>
+   </ion-row>
+ </ion-grid>
 
 
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-button expand="block" (click)="change()">Hide</ion-button>
-  </ion-toolbar>
-</ion-footer>
+
